@@ -5,17 +5,23 @@ report = {
 	rub21: {
 		v1: 0,
 		vx: 0,
-		oneway: 0
+		oneway: 0,
+		bridges: 0,
+		buildings: 0
 	},
 	ediyes: {
 		v1: 0,
 		vx: 0,
-		oneway: 0
+		oneway: 0,
+		bridges: 0,
+		buildings: 0
 	},
 	luis: {
 		v1: 0,
 		vx: 0,
-		oneway: 0
+		oneway: 0,
+		bridges: 0,
+		buildings: 0
 
 	}
 };
@@ -27,9 +33,9 @@ for (var day = start; day <= end; day++) {
 	var file = new osmium.File(day.toString() + ".osc");
 	var reader = new osmium.Reader(file);
 	var handler = new osmium.Handler();
+	console.log('========================= Day:' + day.toString());
 	handler.on('way', function(way) {
-		if (typeof way.tags().highway !== 'undefined') { //evalua las calles
-			//console.log(way.tags().highway);
+		if (typeof way.tags().highway !== 'undefined') { //evalua las calles			
 			switch (way.user) {
 				case 'Rub21':
 					if (way.version === 1) {
@@ -40,6 +46,11 @@ for (var day = start; day <= end; day++) {
 					if (way.tags().oneway !== 'undefined') {
 
 						++report.rub21.oneway;
+					}
+
+					if (way.tags().bridge !== 'undefined') {
+
+						++report.rub21.bridges;
 					}
 
 					break;
@@ -54,6 +65,11 @@ for (var day = start; day <= end; day++) {
 
 						++report.ediyes.oneway;
 					}
+					if (way.tags().bridge !== 'undefined') {
+
+						++report.ediyes.bridges;
+					}
+
 
 					break;
 				case 'Luis36995':
@@ -68,12 +84,20 @@ for (var day = start; day <= end; day++) {
 
 						++report.luis.oneway;
 					}
+					if (way.tags().bridge !== 'undefined') {
+
+						++report.luis.bridges;
+					}
+
 
 					break;
 			}
 		}
 	});
 	reader.apply(handler);
+
+
+
 }
 
 
