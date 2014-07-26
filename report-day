@@ -1,0 +1,13 @@
+#!/bin/bash
+for i in $(seq $1 $2)
+do	
+	curl -O http://planet.openstreetmap.org/replication/day/000/000/$i.osc.gz
+	gzip -d $i.osc.gz
+done
+
+node index.js $1 $2
+
+for k in $(seq $1 $2)
+do	
+ 	rm $k.osc.gz
+done
