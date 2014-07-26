@@ -7,7 +7,7 @@ done
 
 node index.js $1 $2
 
-#for k in $(seq $1 $2)
-#do	
-# 	rm $k.osc
-#done
+for k in $(seq $1 $2)
+do	
+ 	rm $k.osc
+done

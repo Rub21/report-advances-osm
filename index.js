@@ -1,7 +1,6 @@
 var osmium = require('osmium');
+var numeral = require('numeral');
 var argv = require('minimist')(process.argv.slice(2));
-
-
 var obj_way = function() {
 	return {
 		highways: {
@@ -10,7 +9,6 @@ var obj_way = function() {
 			oneways: 0,
 			bridges: 0
 		},
-
 		buildings: {
 			v1: 0,
 			vx: 0
@@ -18,11 +16,14 @@ var obj_way = function() {
 	};
 };
 
-
+function format_num(n) {
+	return numeral(n).format('0,0');
+}
 
 var start = argv._[0];
 var end = argv._[1];
-var users = ['Rub21', 'Luis36995', 'ediyes'];
+var users = ['Rub21', 'ediyes', 'Luis36995'];
+
 count = {
 	'Rub21': {
 		way: new obj_way()
@@ -35,7 +36,7 @@ count = {
 	}
 };
 
-console.log(JSON.stringify(count));
+//console.log(JSON.stringify(count));
 
 for (var day = start; day <= end; day++) {
 	var file = new osmium.File(day.toString() + ".osc");
@@ -66,22 +67,38 @@ for (var day = start; day <= end; day++) {
 	});
 	reader.apply(handler);
 }
-console.log("========== Reporte por Usuarios ===========");
-
-console.log(JSON.stringify(count));
-
-console.log("============ Reporte total ===============");
-
+//console.log(JSON.stringify(count));
 total_way = new obj_way();
 
 for (var i = 0; i < users.length; i++) {
-	total_way.highways.v1 +=count[users[i]].way.highways.v1;
-	total_way.highways.vx +=count[users[i]].way.highways.vx;
-	total_way.highways.bridges +=count[users[i]].way.highways.bridges;
-	total_way.highways.oneways +=count[users[i]].way.highways.oneways;
-	total_way.buildings.v1 +=count[users[i]].way.buildings.v1;
-	total_way.buildings.vx +=count[users[i]].way.buildings.vx;
+	total_way.highways.v1 += count[users[i]].way.highways.v1;
+	total_way.highways.vx += count[users[i]].way.highways.vx;
+	total_way.highways.bridges += count[users[i]].way.highways.bridges;
+	total_way.highways.oneways += count[users[i]].way.highways.oneways;
+	total_way.buildings.v1 += count[users[i]].way.buildings.v1;
+	total_way.buildings.vx += count[users[i]].way.buildings.vx;
 };
 
+//console.log(JSON.stringify(total_way));
 
-console.log(JSON.stringify(total_way));
+//=== PRINT
+
+//Table Highway
+console.log('#### Highway')
+console.log('|User | All highways | Version 1 | Version > 1 | Bridges | Oneways |')
+console.log('|---------|--------------|--------------|--------------|--------------|--------------|')
+for (var i = 0; i < users.length; i++) {
+	console.log(users[i] + '|' + format_num(count[users[i]].way.highways.v1 + count[users[i]].way.highways.vx) + '|' + format_num(count[users[i]].way.highways.v1) + '|' + format_num(count[users[i]].way.highways.vx) + '|' + format_num(count[users[i]].way.highways.bridges) + '|' + format_num(count[users[i]].way.highways.oneways));
+};
+console.log('**Total**' + '| **' + format_num(total_way.highways.v1 + total_way.highways.vx) + '** | **' + format_num(total_way.highways.v1) + '** | **' + format_num(total_way.highways.vx) + '** | **' + format_num(total_way.highways.bridges) + '** | **' + format_num(total_way.highways.oneways) + '**');
+
+
+
+//Table Buildings
+console.log('#### Buildings')
+console.log('| User | All buildings | version 1 | version > 1 |')
+console.log('|---------|--------------|--------------|--------------|')
+for (var i = 0; i < users.length; i++) {
+	console.log(users[i] + '|' + format_num(count[users[i]].way.buildings.v1 + count[users[i]].way.buildings.vx) + '|' + format_num(count[users[i]].way.buildings.v1) + '|' + format_num(count[users[i]].way.buildings.vx));
+};
+console.log('**Total**' + '| **' + format_num(total_way.buildings.v1 + total_way.buildings.vx) + '** | **' + format_num(total_way.buildings.v1) + '** | **' + format_num(total_way.buildings.vx) + '**');
