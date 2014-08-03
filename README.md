@@ -1,17 +1,18 @@
 report-advances-osm
 ===================
 
-Esta herramienta permite obtener los avances que un usuario en una determinada fecha
-por el momento esta en prueba funciona para tres usuarios especificos, esto ira mejorando.
+Esta herramienta permite obtener los avances que un usuario en una determinada fecha.
 
 utiliza datos de : http://planet.osm.org/replication/day/000/000/
 
 
 Reporte desde el :07/21/2014 = 677 al 07/26/2014 = 682
 
-##### Ejecutar 
+##### Ejecutar con usuarios determinados
 
-`$ ./report-day 677 682`
+se ejecuta para los usuarios Rub21,ediyes,Luis36995
+
+`$ ./report-day 677 682  Rub21,ediyes,Luis36995`
 
 resultado:
 
@@ -31,11 +32,9 @@ Luis36995|151|1|150
 **Total**| **12,013** | **1** | **12,012**
 
 
-
-
 ##### Otra forma de ejecutar:
 
-`$ node index.js 677 682`
+`$ node index.js --start=677 --end=682 --users=Rub21,ediyes,Luis36995`
 
 Esto funciona en caso de que se tenga ya los archivos descargados y descomprimidos.
 

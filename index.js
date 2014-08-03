@@ -1,6 +1,6 @@
 var osmium = require('osmium');
 var numeral = require('numeral');
-var argv = require('minimist')(process.argv.slice(2));
+var argv = require('optimist').argv;
 var obj_way = function() {
 	return {
 		highways: {
@@ -20,11 +20,12 @@ function format_num(n) {
 	return numeral(n).format('0,0');
 }
 
-var start = argv._[0];
-var end = argv._[1];
-var users = ['Rub21', 'ediyes', 'Luis36995'];
+var start = argv.start;
+var end = argv.end;
+//var users = ['Rub21', 'ediyes', 'Luis36995'];
+var users = argv.users.split(",");
 
-count = {
+/*var count = {
 	'Rub21': {
 		way: new obj_way()
 	},
@@ -34,9 +35,15 @@ count = {
 	'Luis36995': {
 		way: new obj_way()
 	}
-};
+};*/
 
-//console.log(JSON.stringify(count));
+var count = {};
+for (var k = 0; k < users.length; k++) {
+	var way = {
+		way: new obj_way()
+	};
+	count[users[k]] = way;
+};
 
 for (var day = start; day <= end; day++) {
 	var file = new osmium.File(day.toString() + ".osc");
