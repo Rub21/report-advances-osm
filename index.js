@@ -1,6 +1,7 @@
 var osmium = require('osmium');
 var numeral = require('numeral');
 var argv = require('optimist').argv;
+var _ = require('underscore');
 var obj_way = function() {
 	return {
 		highways: {
@@ -23,8 +24,28 @@ function format_num(n) {
 var start = argv.start;
 var end = argv.end;
 //var users = ['Rub21', 'ediyes', 'Luis36995'];
-var users = argv.users.split(",");
+var users = [];
+if (argv.users === '*') {
 
+	for (var day = start; day <= end; day++) {
+		var file = new osmium.File(day.toString() + ".osc");
+		var reader = new osmium.Reader(file);
+		var handler = new osmium.Handler();
+		handler.on('way', function(way) {
+			if (typeof way.tags().highway !== 'undefined' && users.indexOf(way.user) == +-1) {
+
+				users.push(way.user);
+
+			}
+		});
+		reader.apply(handler);
+	}
+
+
+} else {
+	users = argv.users.split(",");
+}
+//console.log(users);
 /*var count = {
 	'Rub21': {
 		way: new obj_way()
@@ -87,6 +108,14 @@ for (var i = 0; i < users.length; i++) {
 };
 
 //console.log(JSON.stringify(total_way));
+
+/*   _(count).sortBy(function(obj) { return count.home })
+
+
+count = _(count).sortBy(function(user) {
+	console.log(user);
+    return user.way.highways.v1;
+});*/
 
 //=== PRINT
 
