@@ -5,10 +5,11 @@ do
 	gzip -d $i.osc.gz
 done
 
-node index.js --start=$1 --end=$2 --users=$3
+#node index.js --start=$1 --end=$2 --users=$3
+node index_sort.js --start=$1 --end=$2 --users=$3
 
 
 for k in $(seq $1 $2)
 do	
- 	rm $k.osc
+ 	echo rm $k.osc
 done

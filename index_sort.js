@@ -73,15 +73,42 @@ users.sort(function(obj1, obj2) {
 });
 */
 
-fs.writeFile('user.js', JSON.stringify(users), function(err) {
+
+/*fs.writeFile('user.js', JSON.stringify(users), function(err) {
 	if (err) return console.log(err);
+
 	console.log('Archivo creado');
-});
+});*/
+
+
+
+var wstream = fs.createWriteStream('users.md');
+wstream.write('#### Highway\n')
+wstream.write('|Num |User | All highways | Version 1 | Version > 1 | Bridges | Oneways |\n')
+wstream.write('|---------|---------|--------------|--------------|--------------|--------------|--------------|\n')
+
+
+var all_highways = new obj_user();
+
+for (var i = 0; i < users.length && i < 2000; i++) {
+	wstream.write((i + 1) + '|' + users[i].user + '|' + f_num(users[i].total_highways) + '|' + f_num(users[i].highways.v1) + '|' + f_num(users[i].highways.vx) + '|' + f_num(users[i].highways.bridges) + '|' + f_num(users[i].highways.oneways) + '\n');
+	all_highways.total_highways += users[i].total_highways;
+	all_highways.highways.v1 += users[i].highways.v1;
+	all_highways.highways.vx += users[i].highways.vx;
+	all_highways.highways.bridges += users[i].highways.bridges;
+	all_highways.highways.oneways += users[i].highways.oneways;
+
+};
+wstream.write(' | **Total**' + '| **' + f_num(all_highways.total_highways) + '** | **' + f_num(all_highways.highways.v1) + '** | **' + f_num(all_highways.highways.vx) + '** | **' + f_num(all_highways.highways.bridges) + '** | **' + f_num(all_highways.highways.oneways) + '**');
+
+wstream.end();
+
+
 
 //console.log(users);
 
-function format_num(n) {
-	return numeral(n).format('0,0');
+function f_num(n) {
+	return numeral(n).format('0, 0');
 }
 
 function findIndexByKeyValue(obj, key, value) {
@@ -95,14 +122,18 @@ function findIndexByKeyValue(obj, key, value) {
 
 function count_highway(way, index_obj) {
 	++users[index_obj].total_highways;
+
 	if (way.version === 1) {
 		++users[index_obj].highways.v1;
 	} else {
 		++users[index_obj].highways.vx;
 	}
+
 	if (typeof way.tags().bridge !== 'undefined') {
+
 		++users[index_obj].highways.bridges;
 	}
+
 	if (typeof way.tags().oneway !== 'undefined') {
 		++users[index_obj].highways.oneways;
 	}
