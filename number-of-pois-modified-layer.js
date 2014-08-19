@@ -43,12 +43,12 @@ var handler = new osmium.Handler();
 
 handler.on('relation', function(relation) {
 	//1383609600 = 11/05/2013
-	if (relation.timestamp > 1383609600) {
-		//if (relation.timestamp > 1383609600 && users.indexOf(relation.user) > -1) {
-		if (relation.tags().layer !== undefined) {
+	//if (relation.timestamp > 1383609600) {
+	if (relation.timestamp > 1383609600 && users.indexOf(relation.user) > -1) {
+		if (relation.tags().layer !== undefined && relation.version === 1) {
 			num_layer++;
 		}
-		if (relation.tags().amenity !== undefined || relation.tags().shop !== undefined || relation.tags().leisure !== undefined || relation.tags().tourism !== undefined) {
+		if ((relation.tags().amenity !== undefined || relation.tags().shop !== undefined || relation.tags().leisure !== undefined || relation.tags().tourism !== undefined) && relation.version > 1) {
 			num_pois++;
 		}
 	}
@@ -57,12 +57,12 @@ handler.on('relation', function(relation) {
 
 handler.on('way', function(way) {
 	//1383609600 = 11/05/2013
-	//if (way.timestamp > 1383609600 && users.indexOf(way.user) > -1) {
-	if (way.timestamp > 1383609600) {
-		if (way.tags().layer !== undefined) {
+	if (way.timestamp > 1383609600 && users.indexOf(way.user) > -1) {
+		//if (way.timestamp > 1383609600) {
+		if (way.tags().layer !== undefined && way.version === 1) {
 			num_layer++;
 		}
-		if (way.tags().amenity !== undefined || way.tags().shop !== undefined || way.tags().leisure !== undefined || way.tags().tourism !== undefined) {
+		if ((way.tags().amenity !== undefined || way.tags().shop !== undefined || way.tags().leisure !== undefined || way.tags().tourism !== undefined) && way.version > 1) {
 			num_pois++;
 		}
 	}
@@ -72,12 +72,12 @@ handler.on('way', function(way) {
 
 handler.on('node', function(node) {
 	//1383609600 = 11/05/2013
-	//if (node.timestamp > 1383609600 && users.indexOf(node.user) > -1) {
-	if (node.timestamp > 1383609600) {
-		if (node.tags().layer !== undefined) {
+	if (node.timestamp > 1383609600 && users.indexOf(node.user) > -1) {
+		//if (node.timestamp > 1383609600) {
+		if (node.tags().layer !== undefined && node.version === 1) {
 			num_layer++;
 		}
-		if (node.tags().amenity !== undefined || node.tags().shop !== undefined || node.tags().leisure !== undefined || node.tags().tourism !== undefined) {
+		if ((node.tags().amenity !== undefined || node.tags().shop !== undefined || node.tags().leisure !== undefined || node.tags().tourism !== undefined) && node.version > 1) {
 			num_pois++;
 		}
 	}
