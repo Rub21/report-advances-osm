@@ -83,7 +83,8 @@ users.sort(function(obj1, obj2) {
 
 
 var wstream = fs.createWriteStream('users.md');
-wstream.write('#### Highway\n')
+wstream.write('#### Highways\n')
+wstream.write('###### Total users who work at 08/04/2014 are: '+users.length +' , of which have the top 2,000.\n')
 wstream.write('|Num |User | All highways | Version 1 | Version > 1 | Bridges | Oneways |\n')
 wstream.write('|---------|---------|--------------|--------------|--------------|--------------|--------------|\n')
 
