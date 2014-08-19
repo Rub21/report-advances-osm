@@ -87,5 +87,5 @@ handler.on('node', function(node) {
 reader.apply(handler);
 
 
-console.log("Number of Tag Layer : " + num_layer);
-console.log("Number of POIs :  " + num_pois);
+console.log("Number of Tag Layer added : " + num_layer);
+console.log("Number of POIs modified:  " + num_pois);
