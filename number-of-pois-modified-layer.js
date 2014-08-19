@@ -43,7 +43,8 @@ var handler = new osmium.Handler();
 
 handler.on('relation', function(relation) {
 	//1383609600 = 11/05/2013
-	if (relation.timestamp > 1383609600 && users.indexOf(relation.user) > -1) {
+	if (relation.timestamp > 1383609600) {
+		//if (relation.timestamp > 1383609600 && users.indexOf(relation.user) > -1) {
 		if (relation.tags().layer !== undefined) {
 			num_layer++;
 		}
@@ -56,7 +57,8 @@ handler.on('relation', function(relation) {
 
 handler.on('way', function(way) {
 	//1383609600 = 11/05/2013
-	if (way.timestamp > 1383609600 && users.indexOf(way.user) > -1) {
+	//if (way.timestamp > 1383609600 && users.indexOf(way.user) > -1) {
+	if (way.timestamp > 1383609600) {
 		if (way.tags().layer !== undefined) {
 			num_layer++;
 		}
@@ -70,7 +72,8 @@ handler.on('way', function(way) {
 
 handler.on('node', function(node) {
 	//1383609600 = 11/05/2013
-	if (node.timestamp > 1383609600 && users.indexOf(node.user) > -1) {
+	//if (node.timestamp > 1383609600 && users.indexOf(node.user) > -1) {
+	if (node.timestamp > 1383609600) {
 		if (node.tags().layer !== undefined) {
 			num_layer++;
 		}
@@ -84,5 +87,5 @@ handler.on('node', function(node) {
 reader.apply(handler);
 
 
-console.log("num_layer " + num_layer);
-console.log("num_pois " + num_pois);
+console.log("Number of Tag Layer : " + num_layer);
+console.log("Number of POIs :  " + num_pois);
