@@ -1,0 +1,12 @@
+#!/bin/bash
+gzip -d $1.osc.gz
+./osmconvert $1.osc > $1.05m
+./osmfilter $1.osc --keep="@user=ediyes" -o=ediyes.osm
+./osmfilter $1.osc --keep="@user=RichRico" -o=RichRico.osm
+./osmfilter $1.osc --keep="@user=Luis36995" -o=Luis36995.osm
+./osmfilter $1.osc --keep="@user=dannykath" -o=dannykath.osm
+
+rm $1.05m
+
+java -Xmx3024M -DproxyHost=$PROXY -DproxyPort=8080 -jar josm-tested.jar
+

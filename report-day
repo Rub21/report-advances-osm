@@ -13,3 +13,4 @@ for k in $(seq $1 $2)
 do	
  	echo rm $k.osc
 done
+
