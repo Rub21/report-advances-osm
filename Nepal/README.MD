@@ -1,6 +1,11 @@
 1. Convertir shp to poly
 
+https://github.com/Rub21/extract-osm-edition/blob/master/README.md
+
 2. Ejecutar
 
-`./osmconvert nepal.osm -B=nepal.poly -o=nepal.osm`
-`$ node count_editions.js --users=* --file=nepal.osm`
+`./osmconvert nepal.osm -B=Nepal.poly -o=nepal-proc.osm`
+
+`$ node count_editions.js --users=* --file=nepal-proc.osm`
+
+al final le dara un archivo `users-objects.md`

@@ -83,7 +83,7 @@ users.sort(function(obj1, obj2) {
 var wstream = fs.createWriteStream('users-objects.md');
 wstream.write('#### Nepal Editions\n')
 wstream.write('|Num |User | Num objects \n')
-wstream.write('|---------|---------|--------------|--------------|--------------|--------------|--------------|\n')
+wstream.write('---------|---------|--------------\n')
 
 for (var i = 0; i < users.length; i++) {
 	wstream.write((i + 1) + '|' + users[i].user + '|' + f_num(users[i].total) + '\n');
