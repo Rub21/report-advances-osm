@@ -9,3 +9,5 @@ https://github.com/Rub21/extract-osm-edition/blob/master/README.md
 `$ node count_editions.js --users=* --file=nepal-proc.osm`
 
 al final le dara un archivo `users-objects.md`
+
+https://gist.github.com/Rub21/03567715c77683b273e3
